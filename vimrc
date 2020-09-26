@@ -1,45 +1,16 @@
 " Original ~/.vimrc file
 " source ~/configs/vimrc
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-let mapleader=";"	      " defualt \
-
-" basic looks
-set number " linenumber
-set colorcolumn=+1 " heilight column after textwidth
-set showmatch	" matching brackets
-
-" use plugin for status
-" set laststatus=0
-set noshowmode  " to get rid of thing like --INSERT--
-
-set cursorline	" highlight curr line
+source ./syntax.vim
+source ./mapping.vim
 
 
-" search
-set hlsearch	" highlight all matches
-set smartcase	" not case sens when all small
-set incsearch	" search while typing
-
-" stop using arrows
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-
-" split winodow navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 
 " to relod after save via changes :source $MYVIMRC
 augroup onSave
-	au!
-	autocmd bufwritepost vimrc source %
+		au!
+		autocmd bufwritepost vimrc source $MYVIMRC
 augroup end
 
 
@@ -47,9 +18,7 @@ augroup end
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-"
-Plugin 'kien/ctrlp.vim'
+"call vundle#begin('~/some/path/here') Plugin 'kien/ctrlp.vim'
 
 
 Plugin 'vim-syntastic/syntastic'
@@ -95,6 +64,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
 
+Plugin 'tpope/vim-fugitive'
 
 
 " Front
@@ -110,6 +80,8 @@ Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 
 Plugin 'altercation/vim-colors-solarized'
+
+Plugin 'stsewd/isort.nvim'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -151,27 +123,28 @@ call glaive#Install()
 Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar/path/to/google-java-format-VERSION-all-deps.jar"
 augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf	" pip install yapf     
-  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
-  autocmd FileType rust AutoFormatBuffer rustfmt
-  autocmd FileType vue AutoFormatBuffer prettier
+		autocmd FileType bzl AutoFormatBuffer buildifier
+		autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+		autocmd FileType dart AutoFormatBuffer dartfmt
+		autocmd FileType go AutoFormatBuffer gofmt
+		autocmd FileType gn AutoFormatBuffer gn
+		autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+		autocmd FileType java AutoFormatBuffer google-java-format
+		autocmd FileType python AutoFormatBuffer yapf
+		autocmd FileType python3 AutoFormatBuffer yapf
+		autocmd FileType rust AutoFormatBuffer rustfmt
+		autocmd FileType vue AutoFormatBuffer prettier
 augroup END
 
-" theme
-syntax enable
-set background=dark
-colorscheme solarized
-set t_Co=256
+" pip install yapf
 
-set encoding=utf-8
+
 " set tabs to have 4 spaces
 set ts=4
 
+" theme
+colorscheme solarized
 
+" <F9> for saving and running python file
+autocmd FileType python map <buffer> <F9> :wa<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <F9> <esc>:wa<CR>:exec '!python3' shellescape(@%, 1)<CR>

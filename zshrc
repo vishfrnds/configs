@@ -103,6 +103,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # Aliases
 alias install="sudo apt-get install"
+alias update="sudo apt-get update"
 alias remove="sudo apt-get remove --purge"
 alias v="nvim"
 alias p="python3"
