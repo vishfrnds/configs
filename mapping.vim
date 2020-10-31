@@ -35,8 +35,17 @@ nnoremap <TAB> :bnext<CR>
 " SHIFT-TAB will go back
 nnoremap <S-TAB> :bprevious<CR>
 
+imap ii <Esc>
+tnoremap ii <C-\><C-n> " Exit insert mode in terminal
 
 
 " Better tabbing, use <, > to shift and select again
 vnoremap < <gv
 vnoremap > >gv
+
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+

@@ -1,10 +1,6 @@
-" set the runtime path to include Vundle and initialize
-"
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/home/v/.local/share/nvim/plugged')
+call plug#begin(stdpath('data').'/plugged')
 
+Plug 'tpope/vim-vinegar'
 
 " Shows formatting error warning on status bar
 Plug 'vim-syntastic/syntastic'
@@ -45,6 +41,14 @@ source ~/configs/plugins/jedi.vim
 
 let test#strategy = "neovim"
 let test#neovim#term_position = "vert"
-tmap <C-o> <C-\><C-n>       " use C-o to visual mode in term
 
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
 
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme='base16'
+
+colorscheme solarized
