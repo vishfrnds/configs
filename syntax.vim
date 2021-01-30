@@ -21,7 +21,7 @@ set clipboard=unnamedplus               " Copy paste between vim and everything 
 set background=dark                     " tell vim what the background color looks like
 set t_Co=256                            " Support 256 colors
 set ts=4                                " tab as 4 spaces
-set colorcolumn=+1                      " heilight column after textwidth
+set colorcolumn=+1                      " highlight column after textwidth
 set showmatch	                        " matching brackets
 
 " use air line plugin for status
@@ -35,4 +35,3 @@ set smartcase	                        " not case sens when all small
 set ignorecase                          " req for smartcase to work
 
 filetype plugin indent on
-

@@ -1,15 +1,11 @@
 
 """" KEY BINDINGs """"""
 
-let mapleader=";"	      " defualt \
-
+let mapleader=" "	      " defualt \
+nnoremap <leader>w :w<CR>
+nnoremap <leader>s :source $MYVIMRC<CR>
+nnoremap <leader>d :bd<CR>
 nnoremap <esc> :noh<return><esc>	" esc to stop highlighting
-
-" stop using arrows
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
 
 " split winodow navigation
 nnoremap <C-J> <C-W><C-J>

@@ -8,10 +8,24 @@ export ZSH="/home/v/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 source $ZSH/oh-my-zsh.sh
 bindkey -v
 bindkey "^R" history-incremental-search-backward
+
+unsetopt BEEP
+
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
+setopt share_history  # bw multiple instances
+setopt appendhistory
+
+zstyle ':completion:*' menu yes select
+zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion::complete:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' use-cache-on
+autoload -Uz compinit && compinit -i
 
 
 # Set list of themes to pick from when loading at random
@@ -72,7 +86,7 @@ bindkey "^R" history-incremental-search-backward
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-history-substring-search)
+plugins=(git vi-mode tmux fasd)
 
 
 # User configuration
@@ -107,6 +121,6 @@ plugins=(git zsh-history-substring-search)
 alias install="sudo apt-get install"
 alias update="sudo apt-get update"
 alias remove="sudo apt-get remove --purge"
-alias v="nvim"
+alias v="~/github/nvim.appimage"
 alias p="python3"
 alias bright="xrandr --output eDP-1-1 --brightness"
