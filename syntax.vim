@@ -20,7 +20,6 @@ set cursorline                          " Enable highlighting of the current lin
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 set background=dark                     " tell vim what the background color looks like
 set t_Co=256                            " Support 256 colors
-set ts=4                                " tab as 4 spaces
 set colorcolumn=+1                      " highlight column after textwidth
 set showmatch	                        " matching brackets
 

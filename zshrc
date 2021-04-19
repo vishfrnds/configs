@@ -3,6 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/v/.oh-my-zsh"
+export PATH=$PATH:~/Downloads/idea-IC-203.7148.57/bin/
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
