@@ -25,6 +25,13 @@ nnoremap <M-l>    :vertical resize +2<CR>
 inoremap <c-u> <ESC>viwUi
 nnoremap <c-u> viwU<Esc>
 
+" Make 0 go to the first character rather than the beginning
+" of the line. When we're programming, we're almost always
+" interested in working with text rather than empty space. If
+" you want the traditional beginning of line, use ^
+nnoremap 0 ^
+nnoremap ^ 0
+
 
 " TAB in general mode will move to text buffer
 nnoremap <TAB> :bnext<CR>

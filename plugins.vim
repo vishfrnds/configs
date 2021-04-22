@@ -12,6 +12,8 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep prompt_prefix=🔍<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <silent> gd <cmd>lua require('telescope.builtin').lsp_definitions()<CR>
+
 " TELESCOPE
 
 
@@ -38,12 +40,6 @@ let g:tmux_navigator_save_on_switch = 2
 
 Plug 'altercation/vim-colors-solarized'
 
-" Plug 'tpope/vim-fugitive'
-
-" Plug 'vim-test/vim-test'
-" let test#strategy = "neovim"
-" let test#neovim#term_position = "vert"
-
 Plug 'neovim/nvim-lspconfig'
 
 
@@ -52,10 +48,6 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete-lsp'
 
 call plug#end()
-
-" source ~/configs/plugins/syntastic.vim
-" source ~/configs/plugins/codefmt.vim
-" source ~/configs/plugins/jedi.vim
 
 colorscheme solarized
 
@@ -72,7 +64,7 @@ local on_attach = function(client, bufnr)
   local opts = { noremap=true, silent=true }
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -153,6 +145,15 @@ nvim_lsp.groovyls.setup{
   on_attach = on_attach,
   cmd = { "java", "-jar", "~/github/groovy-language-server/build/libs/groovy-language-server-all.jar" },
 }
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        signs = true,
+        underline = false,
+        update_in_insert = false,
+        virtual_text = false,
+    }
+)
 EOF
 
 "auto completion
@@ -180,6 +181,12 @@ set completeopt="menuone,longest"
 
 " After plug end
 
-let g:markdown_fenced_languages = ['html', 'vim', 'ruby', 'python', 'bash=sh', 'rust', 'haskell', 'c', 'cpp']
+" let g:markdown_fenced_languages = ['html', 'vim', 'ruby', 'python', 'bash=sh', 'rust', 'haskell', 'c', 'cpp']
 
+" lsp
 autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 1000)
+nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> gh <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+
