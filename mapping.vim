@@ -24,6 +24,7 @@ noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
 
+
 " split winodow navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -36,6 +37,15 @@ nnoremap <M-j>    :resize -2<CR>
 nnoremap <M-k>    :resize +2<CR>
 nnoremap <M-h>    :vertical resize -2<CR>
 nnoremap <M-l>    :vertical resize +2<CR>
+
+
+" Make 0 go to the first character rather than the beginning
+" of the line. When we're programming, we're almost always
+" interested in working with text rather than empty space. If
+" you want the traditional beginning of line, use ^
+nnoremap 0 ^
+nnoremap ^ 0
+
 
 " TAB in general mode will move to text buffer
 nnoremap <TAB> :bnext<CR>
@@ -56,11 +66,8 @@ nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
-" make 0 go to the first character of the line
-nnoremap 0 ^
-nnoremap ^ 0
 
 nnoremap <leader>q :bd<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>d :SignifyDiff<CR>
-
+nnoremap <leader>s :source $MYVIMRC<CR>

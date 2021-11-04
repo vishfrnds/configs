@@ -1,6 +1,12 @@
 syntax enable  	                		" Highlights syntax
 set nocompatible                        " be iMproved, required
 set hidden				                " Multiple bufer, not abandoned, !q error
+
+" ================ Turn Off Swap Files ==============
+set noswapfile
+set nobackup
+set nowb
+
 set nowrap                              " Display long lines as just one line
 " set iskeyword+=-                        " treat dash separated words as a word text object"
 set encoding=utf-8                      " The encoding displayed
