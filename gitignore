@@ -1,5 +1,6 @@
 *.swp
 *.swo
+nvim.appimage
 
 # python https://github.com/github/gitignore/blob/master/Python.gitignore
 # Byte-compiled / optimized / DLL files

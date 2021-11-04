@@ -2,7 +2,7 @@ syntax enable  	                		" Highlights syntax
 set nocompatible                        " be iMproved, required
 set hidden				                " Multiple bufer, not abandoned, !q error
 set nowrap                              " Display long lines as just one line
-set iskeyword+=-                        " treat dash separated words as a word text object"
+" set iskeyword+=-                        " treat dash separated words as a word text object"
 set encoding=utf-8                      " The encoding displayed
 set pumheight=10                        " Makes popup menu smaller
 set fileencoding=utf-8                  " The encoding written to file
@@ -19,8 +19,8 @@ set cursorline                          " Enable highlighting of the current lin
 " set showtabline=2                       " Always show tabs
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 set background=dark                     " tell vim what the background color looks like
-set t_Co=256                            " Support 256 colors
-set ts=4                                " tab as 4 spaces
+" set t_Co=256                            " Support 256 colors
+set ts=2                                " tab as 4 spaces
 set colorcolumn=+1                      " heilight column after textwidth
 set showmatch	                        " matching brackets
 
@@ -36,3 +36,9 @@ set ignorecase                          " req for smartcase to work
 
 filetype plugin indent on
 
+augroup quickfix
+    autocmd!
+    autocmd FileType qf setlocal wrap
+augroup END
+
+hi clear SignColumn

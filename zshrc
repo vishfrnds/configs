@@ -2,7 +2,8 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/v/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+source $HOME/.bash_profile
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -103,10 +104,14 @@ plugins=(git zsh-history-substring-search)
 #
 #
 #
+# <<< conda initialize <<<
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh  # This loads NVM
+
+#
 # Aliases
 alias install="sudo apt-get install"
 alias update="sudo apt-get update"
 alias remove="sudo apt-get remove --purge"
-alias v="nvim"
+alias v="~/configs/nvim.appimage"
 alias p="python3"
 alias bright="xrandr --output eDP-1-1 --brightness"
