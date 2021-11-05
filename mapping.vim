@@ -67,7 +67,7 @@ nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
 
-nnoremap <leader>q :bd<CR>
+nnoremap <leader>q :bp\|bd #<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>d :SignifyDiff<CR>
 nnoremap <leader>s :source $MYVIMRC<CR>

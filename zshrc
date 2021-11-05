@@ -2,19 +2,13 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-<<<<<<< HEAD
 export ZSH="$HOME/.oh-my-zsh"
-source $HOME/.bash_profile
-=======
-export ZSH="/home/v/.oh-my-zsh"
-export PATH=$PATH:~/Downloads/idea-IC-203.7148.57/bin/
->>>>>>> 912e467a6dac35d8c521a33a6ff0c9c84893dbd2
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
 bindkey -v
 bindkey "^R" history-incremental-search-backward
@@ -32,7 +26,6 @@ zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' use-cache-on
 autoload -Uz compinit && compinit -i
-
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -131,10 +124,6 @@ plugins=(git vi-mode tmux fasd)
 alias install="sudo apt-get install"
 alias update="sudo apt-get update"
 alias remove="sudo apt-get remove --purge"
-<<<<<<< HEAD
 alias v="~/configs/nvim.appimage"
-=======
-alias v="~/github/nvim.appimage"
->>>>>>> 912e467a6dac35d8c521a33a6ff0c9c84893dbd2
 alias p="python3"
 alias bright="xrandr --output eDP-1-1 --brightness"
