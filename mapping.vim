@@ -60,14 +60,6 @@ tnoremap ii <C-\><C-n> " Exit insert mode in terminal
 vnoremap < <gv
 vnoremap > >gv
 
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
-
-
 nnoremap <leader>q :bp\|bd #<CR>
 nnoremap <leader>w :w<CR>
-nnoremap <leader>d :SignifyDiff<CR>
 nnoremap <leader>s :source $MYVIMRC<CR>

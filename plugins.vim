@@ -1,12 +1,15 @@
 call plug#begin(stdpath('data').'/plugged')
 
+Plug 'folke/which-key.nvim'
+
+Plug 'mhinz/vim-startify'
+
+
 Plug 'tpope/vim-surround'
 
 " Shows formatting error warning on status bar
 Plug 'vim-syntastic/syntastic'
 source ~/configs/plugins/syntastic.vim
-
-Plug 'vim-scripts/indentpython.vim'
 
 Plug 'preservim/nerdcommenter'
 source ~/configs/plugins/nerdcommenter.vim
@@ -23,6 +26,7 @@ nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
 
 
 Plug 'lewis6991/gitsigns.nvim'
+" Plug 'tpope/vim-fugitive'
 
 "" https://github.com/google/vim-codefmt 
 " Add maktaba and codefmt to the runtimepath.
@@ -33,23 +37,13 @@ Plug 'google/vim-codefmt'
 " `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
 
-Plug 'altercation/vim-colors-solarized'
-
-Plug 'tpope/vim-fugitive'
-
-Plug 'vim-test/vim-test'
-
 
 " for auto complete
 Plug 'github/copilot.vim'
 imap <silent><script><expr> <C-k> copilot#Accept("\<C-k>")
 let g:copilot_no_tab_map = v:true
 
-
-Plug 'mhartington/oceanic-next'
-
 Plug 'nvim-lualine/lualine.nvim'
-
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -62,7 +56,12 @@ nnoremap <leader>ms :lua require('harpoon.ui').nav_file(2)<CR>
 nnoremap <leader>md :lua require('harpoon.ui').nav_file(3)<CR>
 nnoremap <leader>mf :lua require('harpoon.ui').nav_file(4)<CR>
 
-nnoremap <leader>ht :lua require('harpoon.cmd-ui').toggle_quick_menu<cr>
+nnoremap <leader>mt :lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>
+nnoremap <leader>mj :lua require("harpoon.term").gotoTerminal(1)  <cr>
+nnoremap <leader>mk :lua require("harpoon.term").gotoTerminal(2)  <cr>
+nnoremap <leader>ml :lua require("harpoon.term").gotoTerminal(3)  <cr>
+nnoremap <leader>mr :lua require("harpoon.term").sendCommand(1, 1)  <cr>
+nnoremap <leader>me :lua require("harpoon.term").sendCommand(2, 2)  <cr>
 
 
 
@@ -75,22 +74,107 @@ Plug 'hrsh7th/cmp-path'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
-
 Plug 'tpope/vim-vinegar'
+
+
+Plug 'nvim-neorg/neorg'
+
+Plug 'catppuccin/nvim'
+" Plug 'mhartington/oceanic-next'
+" Plug 'altercation/vim-colors-solarized'
+
+
 
 call plug#end()
 
+lua << EOF
+  require("which-key").setup {
+      window = {
+        border = "single", -- none, single, double, shadow
+        position = "top", -- bottom, top
+        margin = { 40, 85, 1, 1 }, -- extra window margin [top, right, bottom, left]
+        padding = { 0, 0, 0, 0 }, -- extra window padding [top, right, bottom, left]
+        winblend = 0
+      },
+      layout = {
+        height = { min = 40, max = 90 }, -- min and max height of the columns
+        width = { min = 10, max = 90 }, -- min and max width of the columns
+        spacing = 3, -- spacing between columns
+        align = "right", -- align columns left, center or right
+      },
+  }
+EOF
+
+" the glaive#Install() should go after the "call vundle#end()"
+call glaive#Install()
+" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
+Glaive codefmt plugin[mappings]
+
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType vue AutoFormatBuffer prettier
+augroup END
+
+
+
+lua << EOF
+require("harpoon").setup{
+  global_settings = {
+    enter_on_sendcmd = true,
+  },
+}
+
+
+    require('neorg').setup {
+        -- Tell Neorg what modules to load
+        load = {
+            ["core.defaults"] = {}, -- Load all the default modules
+            ["core.norg.concealer"] = {}, -- Allows for use of icons
+            ["core.norg.dirman"] = { -- Manage your directories with Neorg
+                config = {
+                    workspaces = {
+                        my_workspace = "~/neorg"
+                    }
+                }
+            },
+          ["core.norg.completion"] = {
+                config = {
+                  engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
+                }
+          },
+        },
+    }
+
+  local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+
+  parser_configs.norg = {
+    install_info = {
+        url = "https://github.com/nvim-neorg/tree-sitter-norg",
+        files = { "src/parser.c", "src/scanner.cc" },
+        branch = "main"
+    },
+  }
+
+EOF
+
 source ~/configs/plugins/codefmt.vim
-
-let test#strategy = "neovim"
-let test#neovim#term_position = "vert"
-
 
 syntax enable
 set termguicolors
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
+" let g:oceanic_next_terminal_bold = 1
+" let g:oceanic_next_terminal_italic = 1
+" colorscheme OceanicNext
+colorscheme catppuccin
+
 
 
 set completeopt="menu,menuone,noselect"
@@ -155,9 +239,10 @@ end
       },
   sources = {
       { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+      { name = "neorg" },
       { name = 'buffer' },
       { name = 'path' },
-      { name = 'luasnip' },
       },
   }
 
@@ -186,16 +271,16 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '[e', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
 
   if client.resolved_capabilities.document_formatting then
       buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
       vim.cmd([[
       augroup lsp_format
           autocmd! * <buffer>
-          autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()
+          autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_asyn()
       augroup END
       ]])
   end
@@ -226,7 +311,38 @@ for _, lsp in ipairs(servers) do
 end
 
 
-require('gitsigns').setup()
+require('gitsigns').setup{
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- Navigation
+    map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
+    map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+
+    -- Actions
+    map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+    map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+    map('n', '<leader>hS', gs.stage_buffer)
+    map('n', '<leader>hu', gs.undo_stage_hunk)
+    map('n', '<leader>hR', gs.reset_buffer)
+    map('n', '<leader>hp', gs.preview_hunk)
+    map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+    map('n', '<leader>tb', gs.toggle_current_line_blame)
+    map('n', '<leader>hd', gs.diffthis)
+    map('n', '<leader>hD', function() gs.diffthis('~') end)
+    map('n', '<leader>td', gs.toggle_deleted)
+
+    -- Text object
+    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+  end
+
+}
 
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
