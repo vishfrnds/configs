@@ -6,6 +6,7 @@ set hidden				                " Multiple bufer, not abandoned, !q error
 set noswapfile
 set nobackup
 set nowb
+set scrolloff=999                       " keep cursor at center of screen
 
 set nowrap                              " Display long lines as just one line
 " set iskeyword+=-                        " treat dash separated words as a word text object"

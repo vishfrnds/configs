@@ -1,5 +1,7 @@
 call plug#begin(stdpath('data').'/plugged')
 
+Plug 'j-hui/fidget.nvim'
+
 Plug 'folke/which-key.nvim'
 
 Plug 'mhinz/vim-startify'
@@ -88,16 +90,19 @@ Plug 'catppuccin/nvim'
 call plug#end()
 
 lua << EOF
+  require"fidget".setup{}
+
+
   require("which-key").setup {
       window = {
         border = "single", -- none, single, double, shadow
         position = "top", -- bottom, top
-        margin = { 40, 85, 1, 1 }, -- extra window margin [top, right, bottom, left]
+        margin = { 30, 100, 10, 2 }, -- extra window margin [top, right, bottom, left]
         padding = { 0, 0, 0, 0 }, -- extra window padding [top, right, bottom, left]
         winblend = 0
       },
       layout = {
-        height = { min = 40, max = 90 }, -- min and max height of the columns
+        height = { min = 10, max = 100 }, -- min and max height of the columns
         width = { min = 10, max = 90 }, -- min and max width of the columns
         spacing = 3, -- spacing between columns
         align = "right", -- align columns left, center or right
