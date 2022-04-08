@@ -1,6 +1,6 @@
 call plug#begin(stdpath('data').'/plugged')
 
-Plug 'j-hui/fidget.nvim'
+Plug 'zbirenbaum/copilot.lua'
 
 Plug 'folke/which-key.nvim'
 
@@ -41,9 +41,9 @@ Plug 'google/vim-glaive'
 
 
 " for auto complete
-Plug 'github/copilot.vim'
-imap <silent><script><expr> <C-k> copilot#Accept("\<C-k>")
-let g:copilot_no_tab_map = v:true
+" Plug 'github/copilot.vim'
+" imap <silent><script><expr> <C-k> copilot#Accept("\<C-k>")
+" let g:copilot_no_tab_map = v:true
 
 Plug 'nvim-lualine/lualine.nvim'
 
@@ -70,6 +70,9 @@ nnoremap <leader>me :lua require("harpoon.term").sendCommand(2, 2)  <cr>
 Plug 'neovim/nvim-lspconfig'
 
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'zbirenbaum/copilot-cmp'
+Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-path'
@@ -81,7 +84,8 @@ Plug 'tpope/vim-vinegar'
 
 Plug 'nvim-neorg/neorg'
 
-Plug 'catppuccin/nvim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+
 " Plug 'mhartington/oceanic-next'
 " Plug 'altercation/vim-colors-solarized'
 
@@ -90,8 +94,6 @@ Plug 'catppuccin/nvim'
 call plug#end()
 
 lua << EOF
-  require"fidget".setup{}
-
 
   require("which-key").setup {
       window = {
@@ -132,6 +134,14 @@ augroup END
 
 
 lua << EOF
+
+
+local catppuccin = require("catppuccin").setup {
+  integrations = {
+    	which_key = true,
+  },
+}
+
 require("harpoon").setup{
   global_settings = {
     enter_on_sendcmd = true,
@@ -180,7 +190,6 @@ colorscheme catppuccin
 
 
 
-set completeopt="menu,menuone,noselect"
 
 lua << EOF
 
@@ -200,16 +209,47 @@ additional_vim_regex_highlighting = false,
 }
 
 --- autocomplete
+
+require("copilot").setup{
+  plugin_manager_path = vim.fn.stdpath("data") .. "/plugged", -- Installation Path of packer, change to the plugin manager installation path of your choice
+}
+
+
+vim.opt.completeopt = "menuone,noselect"
+
 require('cmp_nvim_lsp').setup{}
 local WIDE_HEIGHT = 10
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+require'cmp'.setup.cmdline(':', {
+  sources = {
+    { name = 'cmdline' }
+  }
+})
 cmp.setup{
-snippet = {
-    expand = function(args)
-    require('luasnip').expand(args.body)
-end
-},
+  snippet = {
+      expand = function(args)
+      require('luasnip').expand(args.body)
+  end
+  },
+  style = {
+    winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+   },
+  window = {
+    completion = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      scrollbar = "║",
+      autocomplete = {
+        require("cmp.types").cmp.TriggerEvent.InsertEnter,
+        require("cmp.types").cmp.TriggerEvent.TextChanged,
+      },
+    },
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+      scrollbar = "║",
+    },
+  },
   mapping = {
       ['<c-p>'] = cmp.mapping.select_prev_item(),
       ['<c-n>'] = cmp.mapping.select_next_item(),
@@ -240,14 +280,31 @@ end
           "s",
           }),
       },
+  experimental = {
+    native_menu = false,
+    ghost_text = true,
+  },
   sources = {
+      { name = 'copilot'},
       { name = 'nvim_lsp' },
+      { name = 'nvim_lsp_signature_help' },
       { name = 'luasnip' },
       { name = "neorg" },
       { name = 'buffer' },
       { name = 'path' },
-      },
-  }
+  },
+  sorting = {
+    comparators = {
+      cmp.config.compare.recently_used,
+      cmp.config.compare.offset,
+      cmp.config.compare.score,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+  preselect = cmp.PreselectMode.Item,
+}
 
 local nvim_lsp = require('lspconfig')
 
@@ -363,6 +420,8 @@ options = {
     icons_enabled = false,
     component_separators =  { left = '', right = '' },
     section_separators = { left = '', right = '' },
+    globalstatus = true,
+    theme = "catppuccin"
   },
 sections = {
       lualine_a = {'mode'},
